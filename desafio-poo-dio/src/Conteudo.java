@@ -1,4 +1,4 @@
-public abstract class Conteudo{
+public abstract class Conteudo {
 
     protected static final double XP_PADRAO = 10;
     private String titulo, descricao;
@@ -25,7 +25,4 @@ public abstract class Conteudo{
         this.descricao = descricao;
     }
 
-    
-        
-    
 }

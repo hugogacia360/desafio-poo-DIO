@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
@@ -8,14 +9,22 @@ public class Dev {
     private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
 
     public void inscreverBootcamp(Bootcamp bootcamp) {
+        this.conteudosInscritos.addAll(bootcamp.getConteudos()); // adiciona todos os conteudos do bootcamp no set de conteudos inscritos
+        bootcamp.getDevsInscritos().add(this); // adiciona o dev no set de devs inscritos do bootcamp
     }
 
     public void progredir(){
-
+        Optional<Conteudo> conteudo = this.conteudosInscritos.stream().findFirst();
+        if(conteudo.isPresent()){ // verifica se o conteudo existe
+            this.conteudosConcluidos.add(conteudo.get()); // adiciona o conteudo no set de conteudos concluidos
+            this.conteudosInscritos.remove(conteudo.get()); // remove o conteudo do set de conteudos inscritos
+        } else {
+            System.out.println("Não há conteúdos para progredir");
+        }
     }
 
-    public void calcularTotalXp(){
-       
+    public double calcularTotalXp(){
+       return this.conteudosConcluidos.stream().mapToDouble(Conteudo::calcularXp).sum(); // soma o xp de todos os conteudos concluidos
     }
 
     public String getNome() {
